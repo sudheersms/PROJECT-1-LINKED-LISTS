@@ -1,6 +1,0 @@
-
-1. Add Patient
-2. Serve Patient
-3. Display Queue
-4. Count Patients
-5. Exit
