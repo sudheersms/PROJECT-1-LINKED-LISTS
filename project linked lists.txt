@@ -1,0 +1,125 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Node structure for a patient
+struct Patient {
+    int id;
+    string name;
+    Patient* next;
+};
+
+// Linked List class
+class PatientQueue {
+private:
+    Patient* head;
+
+public:
+    PatientQueue() {
+        head = nullptr;
+    }
+
+    // Add patient to the queue
+    void addPatient(int id, string name) {
+        Patient* newPatient = new Patient{id, name, nullptr};
+
+        if (head == nullptr) {
+            head = newPatient;
+        } else {
+            Patient* temp = head;
+            while (temp->next != nullptr) {
+                temp = temp->next;
+            }
+            temp->next = newPatient;
+        }
+        cout << "Patient added: " << name << endl;
+    }
+
+    // Serve (remove) the first patient
+    void servePatient() {
+        if (head == nullptr) {
+            cout << "No patients to serve.\n";
+            return;
+        }
+
+        Patient* temp = head;
+        cout << "Serving patient: " << head->name << endl;
+        head = head->next;
+        delete temp;
+    }
+
+    // Display patient queue
+    void displayQueue() {
+        if (head == nullptr) {
+            cout << "Queue is empty.\n";
+            return;
+        }
+
+        cout << "\n--- Patient Queue ---\n";
+        Patient* temp = head;
+        while (temp != nullptr) {
+            cout << "ID: " << temp->id << ", Name: " << temp->name << endl;
+            temp = temp->next;
+        }
+        cout << "----------------------\n";
+    }
+
+    // Count total patients
+    void countPatients() {
+        int count = 0;
+        Patient* temp = head;
+        while (temp != nullptr) {
+            count++;
+            temp = temp->next;
+        }
+        cout << "Total patients: " << count << endl;
+    }
+};
+
+
+// Main function
+int main() {
+    PatientQueue pq;
+    int choice, id;
+    string name;
+
+    while (true) {
+        cout << "\n1. Add Patient";
+        cout << "\n2. Serve Patient";
+        cout << "\n3. Display Queue";
+        cout << "\n4. Count Patients";
+        cout << "\n5. Exit";
+        cout << "\nEnter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter Patient ID: ";
+                cin >> id;
+                cout << "Enter Patient Name: ";
+                cin >> name;
+                pq.addPatient(id, name);
+                break;
+
+            case 2:
+                pq.servePatient();
+                break;
+
+            case 3:
+                pq.displayQueue();
+                break;
+
+            case 4:
+                pq.countPatients();
+                break;
+
+            case 5:
+                return 0;
+
+            default:
+                cout << "Invalid choice! Try again.\n";
+        }
+    }
+
+    return 0;
+}
